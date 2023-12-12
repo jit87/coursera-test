@@ -40,7 +40,7 @@
     <div class="col-md-6" ng-controller="AlreadyBoughtController as boughtList">
      <h2>Already Bought:</h2>
      <ul>
-       <li ng-repeat="item in boughtList.boughtItems">{{item.quantity}} {{item.name}}</li>
+       <li ng-repeat="item in boughtList.boughtItems">Bought {{item.quantity}} {{item.name}}</li>
      </ul>
      <div ng-if="boughtList.boughtItems==0" class="emptyMessage">Nothing bought yet.</div>
     </div>

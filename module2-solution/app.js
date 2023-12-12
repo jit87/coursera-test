@@ -4,7 +4,7 @@ angular.module('ShoppingListCheckOff', [])
 .controller('AlreadyBoughtController', AlreadyBoughtController)
 .service('ShoppingListCheckOffService', ShoppingListCheckOffService);
 
-
+//Controllers
 ToBuyController.$inject = ['ShoppingListCheckOffService'];
 function ToBuyController(ShoppingListCheckOffService){
 
@@ -22,12 +22,13 @@ AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
 function AlreadyBoughtController(ShoppingListCheckOffService){
 
     var boughtList = this; 
+
     boughtList.boughtItems = ShoppingListCheckOffService.getBoughtItems();
 
 }
 
 
-
+//Service
 function ShoppingListCheckOffService(){
     var service = this; 
 
@@ -64,7 +65,7 @@ function ShoppingListCheckOffService(){
     service.removeItem = function(item) {
         //This obtains position in Array of To Buy list
         var index = itemsToBuy.indexOf(item); 
-        //Adds the bought product and removes it from To Buy List
+        //Adds the bought product to Bought List and removes it from To Buy List
         boughtItems.push(item);
         itemsToBuy.splice(index,1);
     }
