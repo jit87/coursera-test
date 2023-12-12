@@ -28,7 +28,6 @@ function AlreadyBoughtController(ShoppingListCheckOffService){
 
 
 
-
 function ShoppingListCheckOffService(){
     var service = this; 
 
@@ -62,13 +61,12 @@ function ShoppingListCheckOffService(){
         return itemsToBuy; 
     }
 
-    service.addItem= function(index){
-        boughtItems.push(itemsToBuy[index]); 
-    }
-
     service.removeItem = function(item) {
+        //This obtains position in Array of To Buy list
+        var index = itemsToBuy.indexOf(item); 
+        //Adds the bought product and removes it from To Buy List
         boughtItems.push(item);
-        itemsToBuy.pop(item);
+        itemsToBuy.splice(index,1);
     }
 
     service.getBoughtItems = function (){
