@@ -3,39 +3,76 @@ angular.module('NarrowItDownApp', [])
 .service('MenuSearchService',  MenuSearchService)
 .directive('foundItems', FoundItemsDirective);
 
+
 //Controllers
-NarrowItDownController.$inject = ['MenuSearchService'];
-function NarrowItDownController(MenuSearchService){
-    var list = this; 
-    
+function NarrowItDownController(MenuSearchService) {
+    var list = this;
+    list.searchTerm = '';
+    list.found = [];  // Inicializa como un array vacío
+  
+    list.getMatchedMenuItems = function () {
+      MenuSearchService.getMatchedMenuItems(list.searchTerm)
+        .then(function (foundItems) {
+          list.found = foundItems;
+          console.log(list.found);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    };
+  }
+
+function ListDirectiveController() {
+    var listDirective = this;
 }
+
 
 //Directives
 function FoundItemsDirective(){
     var ddo = {
-        templateURL: 'foundItemsDirective.html',
+        templateUrl: 'foundItems.html',
         scope: {
             items: '<',
-
-            onRemove : '&'
+            onRemove: '&'
         },
-        controller: NarrowItDownController,
-        controllerAs:'list',
-
-    }
+        controller: ListDirectiveController,
+        controllerAs: 'listDirective',
+        bindToController: true
+    };
+    return ddo; 
 }
 
 
-//Service
-function  MenuSearchService(){
-    getMatchedMenuItems(searchTerm)
-    {
-       /*return $http(...).then(function (result) {
-            // process result and only keep items that match
-            var foundItems...
+//Services
+MenuSearchService.$inject = ['$http'];
+function MenuSearchService($http){
+
+    this.getMatchedMenuItems = function (searchTerm) {
+        var apiUrl = 'https://coursera-jhu-default-rtdb.firebaseio.com/menu_items.json';
         
-            // return processed items
+        return $http.get(apiUrl)
+          .then(function (response) {
+            var menuData = response.data || {};
+            var foundItems = [];
+
+            // Iterar a través de las categorías
+            for (var categoryKey in menuData) {
+              if (menuData.hasOwnProperty(categoryKey)) {
+                var category = menuData[categoryKey];
+
+                // Lógica de búsqueda dentro de cada categoría
+                foundItems = foundItems.concat(category.menu_items.filter(function (menuItem) {
+                    return (
+                        menuItem.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        menuItem.description.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }));
+              }
+            }
             return foundItems;
-        });*/
-    }
+
+          });
+
+    };
+    
 }
