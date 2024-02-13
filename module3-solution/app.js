@@ -20,10 +20,14 @@ function NarrowItDownController(MenuSearchService) {
           console.error(error);
         });
     };
+
+    list.remove = function (index){
+      list.found.splice(index, 1);
+    }
   }
 
 function ListDirectiveController() {
-    var listDirective = this;
+  var list = this;
 }
 
 
@@ -36,7 +40,7 @@ function FoundItemsDirective(){
             onRemove: '&'
         },
         controller: ListDirectiveController,
-        controllerAs: 'listDirective',
+        controllerAs: 'list',
         bindToController: true
     };
     return ddo; 
