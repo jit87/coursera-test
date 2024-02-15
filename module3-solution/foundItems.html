@@ -1,7 +1,10 @@
-<ul>
-    <li ng-repeat="item in list.items">
-        <!--name of the menu item, its short_name, and the description-->
-        <span style="font-weight:bold;"> {{ item.name }} </span> , {{ item.short_name }} , {{ item.description }}
-        <button ng-click="list.onRemove({index: $index})">Don't want this one!</button>
-    </li>
-</ul>
+<div style="clear:both;">
+    <ul>
+        <li ng-repeat="item in list.items">
+            <!--name of the menu item, its short_name, and the description-->
+            <span style="font-weight:bold;"> {{ item.name }} </span> , {{ item.short_name }} , {{ item.description }}
+            <button ng-click="list.onRemove({index: $index})">Don't want this one!</button>
+        </li>
+    </ul>
+    <div ng-transclude></div>
+</div>
